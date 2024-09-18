@@ -32,30 +32,19 @@
     crossorigin="anonymous"
   ></script>
 
-  <script
-    src="https://kit.fontawesome.com/yourcode.js"
-    crossorigin="anonymous"
-  ></script>
-
-  <script
-    src="https://code.jquery.com/jquery-3.6.0.js"
-    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"
-  ></script>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
   <%= javascript_importmap_tags %>
 </head>
 <body class="d-flex flex-column min-vh-100">
   <% if flash[:notice] %>
-    <div class="notification is-success global-notification"><%= flash[:notice] %></div>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
   <% end %>
   <% if flash[:alert] %>
-    <div class="notification is-danger global-notification"><%= flash[:alert] %></div>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
   <header class="p-3 bg-dark text-white">
-    <div class="container text-white">
+    <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a
           href="/"
@@ -65,22 +54,29 @@
         </a>
 
         <ul class="nav nav-pills">
-          <li>
-            <%= link_to 'Home', root_path, class: 'nav-item nav-link text-white' %>
+          <li class="nav-item">
+            <%= link_to 'Home', root_path, class: 'nav-link text-white' %>
           </li>
-
-          <li>
-            <%= link_to 'Login', new_user_session_path, class: 'job nav-item nav-link active' %>
-          </li>
-
-          <li>
-            <%= link_to 'Sign-up', new_user_registration_path, class: 'job nav-item nav-link active' %>
-          </li>
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'nav-link text-white' %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'Login', new_user_session_path, class: 'nav-link text-white' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Sign-up', new_user_registration_path, class: 'nav-link text-white' %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
   </header>
 
-  <%= yield %>
+  <main class="flex-shrink-0">
+    <%= yield %>
+  </main>
+
 </body>
 </html>
