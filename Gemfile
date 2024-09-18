@@ -43,6 +43,14 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# For authentication
+gem 'devise'
+
+# For authorization
+gem 'cancancan'
+
+gem "mysql-binuuid-rails", git: "https://github.com/kreeti/mysql-binuuid-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
